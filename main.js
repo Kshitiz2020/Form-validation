@@ -9,13 +9,13 @@ function validateName() {
   const name = document.getElementById("contact-name").value;
 
   if (name.length == 0) {
-    nameError.innerHTML = "Name is required";
+    nameError.textContent = "Name is required";
     return false;
   }
   if (
     !name.match(/^[A-Za-zÀ-ÖØ-öø-ÿ][A-Za-zÀ-ÖØ-öø-ÿ\s'-]*[A-Za-zÀ-ÖØ-öø-ÿ]$/)
   ) {
-    nameError.innerHTML = "Write you full name";
+    nameError.textContent = "Write you full name";
     return false;
   }
   nameError.innerHTML = '<i class="fa-solid fa-check"></i>';
@@ -27,11 +27,16 @@ function validatePhone() {
   const phone = document.getElementById("contact-phone").value;
 
   if (phone.length == 0) {
-    phoneError.innerHTML = "Phone Number is required";
+    phoneError.textContent = "Phone Number is required";
     return false;
   }
   if (!phone.match(/^[0-9]{10}$/)) {
-    phoneError.innerHTML = "Write your Phone Number";
+    phoneError.textContent = "Write your Phone Number";
+    if (phone.length >= 12) {
+      phoneError.textContent =
+        "Phone Number should be not be greater then 12 number with country code ";
+      return false;
+    }
     return false;
   }
   phoneError.innerHTML = '<i class="fa-solid fa-check"></i>';
@@ -43,11 +48,11 @@ function validateEmail() {
   const email = document.getElementById("contact-email").value;
 
   if (email.length == 0) {
-    emailError.innerHTML = "Email is required";
+    emailError.textContent = "Email is required";
     return false;
   }
   if (!email.match(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/)) {
-    emailError.innerHTML = "Invalid email address";
+    emailError.textContent = "Invalid email address";
     return false;
   }
   emailError.innerHTML = '<i class="fa-solid fa-check"></i>';
@@ -57,11 +62,11 @@ function validateEmail() {
 // message validation
 function validateMessage() {
   const message = document.getElementById("contact-message").value;
-  const requiredCharacters = 200;
+  const requiredCharacters = 20;
   const leftCharacters = requiredCharacters - message.length;
 
   if (leftCharacters > 0) {
-    messageError.innerHTML = `${leftCharacters}  more characters left`;
+    messageError.textContent = `${leftCharacters}  more characters left`;
 
     return false;
   }
@@ -79,7 +84,7 @@ function validateForm() {
     !validateMessage()
   ) {
     /* submitError.style.display = "block"; */
-    submitError.innerHTML = "Please check all the fields";
+    submitError.textContent = "Please check all the fields";
     setTimeout(function () {
       submitError.style.display = "none";
     }, 3000);
